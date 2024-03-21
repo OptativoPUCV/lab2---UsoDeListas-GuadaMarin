@@ -42,17 +42,44 @@ Al finalizar retorna la lista creada.
 */
 
 List* crea_lista() {
-   List* L = create_list();
-   return L;
+    List *lista = create_list(); // Creamos una lista vacía
+
+    // Iteramos sobre los números del 1 al 10
+    for (int i = 1; i <= 10; i++) {
+        int *dato = (int*)malloc(sizeof(int)); // Reservamos memoria para un entero
+        if (dato == NULL) {
+            // Manejar error de asignación de memoria
+            printf("Error: No se pudo asignar memoria.\n");
+            exit(EXIT_FAILURE);
+        }
+        *dato = i; // Asignamos el valor del número
+
+        pushBack(lista, dato); // Agregamos el puntero a la lista
+    }
+
+    return lista;
 }
+
+
 
 /*
 Ejercicio 2.
 Crea una función que reciba una lista de enteros (int*) y 
 retorne la suma de sus elementos.
 */
+
 int sumaLista(List *L) {
-   return 0;
+    int suma = 0; // Variable para almacenar la suma
+    int *elemento; // Variable para almacenar cada elemento de la lista
+
+    // Iterar sobre la lista y sumar cada elemento
+    elemento = (int*)first(L); // Obtenemos el primer elemento
+    while (elemento != NULL) {
+        suma += *elemento; // Sumamos el elemento actual a la suma
+        elemento = (int*)next(L); // Pasamos al siguiente elemento
+    }
+
+    return suma; // Retornamos la suma total
 }
 
 /*
@@ -64,8 +91,18 @@ Asume que popCurrent luego de eliminar un elemento se
 posiciona en el elemento anterior.
 */
 
-void eliminaElementos(List*L, int elem){
-
+void eliminaElementos(List *L, int elem) {
+    int *elemento;
+    
+    elemento = (int*)first(L); 
+    while (elemento != NULL) {
+   
+       if (*elemento == elem) {
+            popCurrent(L);
+        elemento = next(L);
+       
+    }
+}
 }
 
 /*
@@ -86,6 +123,20 @@ paraéntesis balanceados. Retorna 1 si están balanceados,
 */
 
 int parentesisBalanceados(char *cadena) {
+  for(int i=0;i<strlen(cadena);i++){
+  if(cadena[i]=='(' || cadena[i]== '[' || cadena[i]=='{'){
+    push(&pila, cadena[i]);
+  }
+  else if(cadena[i]==')' || cadena[i] == ']' || cadena[i] == '}')){
+    if(pila == NULL) return 0;
+    else{
+      if (cadena[i]== top(&pila)){
+        pop(&pila);
+      else 
+        ("no esta balanceada");
+    }
+  }  
+  
    return 0;
 }
 
